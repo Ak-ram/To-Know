@@ -18,3 +18,52 @@ sudo chown -R username directory_name
   - -R – the recursive switch to make sure all child objects get the same ownership changes 
   - username – the new owner of the folder 
   - directory_name – the directory to be modified
+
+## Corp: Proxy Test Configuration:
+
+```json
+{
+
+  "/api/*": {
+    "target": "https://corporate-cashcollection-uat.apps.openshiftnonprod.staff.banquemisr.bank/",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "host": "0.0.0.0",
+  "port": "40000"
+}
+```
+
+## Commit Msg Format:
+
+```plain
+[Refactor: CRPCC-4291] Remove terms and conditions checkbox
+
+Terms and conditions checkbox was removed from the payment link.
+Changes Made:
+- Eliminate the terms and conditions checkbox and its related form.
+- Ensure all functionality previously dependent on the checkbox remains intact.
+
+Issue: Payment Link Enhancements | Remove Terms & Conditions 
+```
+
+## BM Test Credentails:
+
+**Youssef:**	
+  - Authorizer: 11534734.11111112 / Misr@2024
+	- Maker: 11534734.33333334 / Misr@2023
+	- Checker: 11534734.11111113 / Misr@2023
+	- Checker_1: 11534734.11111115 / Misr@2023 
+
+**Rahma:**	
+  - Authorizer: 14805784.11111111 /  Misr@2090
+	- Maker: 14805784.33333334 / Misr@2020
+	- Cheker: 14805784.33333333 / Misr@2022
+	- Cheker_1: 14805784.33333336 /  Misr@2022
+
+## Commands: 
+### npm: 
+ 1. Uninstall Node:
+```css
+sudo rm -rf /usr/local/{bin/{node,npm},lib/node_modules/npm,lib/node,share/man/*/node.*}
+```
