@@ -1,6 +1,6 @@
 # Mac Hell
 
-## Insufficient permissions in vscode
+## VS Code: [Insufficient permissions](https://stackoverflow.com/questions/51674627/insufficient-permissions-in-vscode)
 
 **Problem:** 
 
