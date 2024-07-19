@@ -25,8 +25,6 @@ Running `CCSideNavSerice.getLeftMenu()` will return object like this:
 
 
 
-
-
 ```json
 [
     {
