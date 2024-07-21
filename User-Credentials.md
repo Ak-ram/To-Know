@@ -16,6 +16,6 @@
 
 | Process  | Authorized Maker  | Maker  | Checker  | Checker_1  | Inquiry |
 |---|---|---|---|---|---|
-|  Generate Payment link |   |   |  NO | NO  | NO  | 
+|  Generate Payment link |  YES |   |  NO | NO  | NO  | 
 |   |   |   |   |   |   |
 |   |   |   |   |   |   |
