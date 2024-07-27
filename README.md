@@ -23,4 +23,10 @@ I prepare this image to illustrate this point, it's out of our scope but i hope 
 
 ![إضافة عنوان](https://github.com/user-attachments/assets/f4f9ff53-90b1-4df9-8a9e-da40b7c0d4d2)
 
+# Another Question ? Can elements jump from container plane to another plane ? 
+### YES, And this is what css `float` does
 
+Float property make element's transfer from container plane to the corresponding plane, see this image 
+
+
+![إضافة عنوان](https://github.com/user-attachments/assets/93e900f4-d412-4b56-a77b-ac8774a66809)
