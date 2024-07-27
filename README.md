@@ -40,5 +40,11 @@ we can achieve this floating by using float property
 ```
   
 > [!NOTE]
-> `float` property affects also on `display` property of the element, as i convert **block** elements to **inline** one.
-> Floated element doesn't leave a gap in the container layer as the next elements `.p1` & `.p2` auto fill this gap, revisit the above image again.
+> 
+> - `float` property affects also on `display` property of the element, as i convert **block** elements to **inline** one.
+> - Floated element doesn't leave a gap in the container layer as the next elements `.p1` & `.p2` auto fill this gap, revisit the above image.
+> - Due to this auto filling behavior, elements of both layer -container & floating- may be overlapping, revist 4rd point in the above image again. 
+> - To Solve this overlapping we use `clear` property
+> ```css
+> clear : right; /* right || left | both */
+> ```
