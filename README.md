@@ -11,7 +11,13 @@ IN this article we will take about Float way, but why i will do that ? it's old 
 before talk about what is floating we should first know what **document flow** is ?
 document flow is about the arrangement of the **block** html elements in **one** level ! we can represent block element in a cubic shape like this:
 
-
+```
++--------+
+|        |
+|  Front |
+|        |
++--------+
+```
 ![إضافة عنوان (3)](https://github.com/user-attachments/assets/4ec49c38-54f0-4580-9299-44bd22a2569d)
 
 The image above illustrate that everything exist in our block element `div` in our case, will be live in container plane by default.
