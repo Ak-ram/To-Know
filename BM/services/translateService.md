@@ -1,56 +1,54 @@
-# Guide to use `TranslateService`
-The `TranslateService` is part of a powerful Angular translation library that helps manage translations in your application. It allows you to dynamically change languages, load translations, handle missing translations, and more. Below, we will walk through the usage of the `TranslateService` in Angular, and learn how to use it in your code.
+# Implementing `TranslateService` in your Component
 
-To be able use translateService we need to make changes in 3 places:
-1- in our module
-2- translation files
-3- in our component
+### Introduction
 
-## Importing Required Modules
+In this guide, we'll walk through the process of using the `TranslateService` from the `@ngx-translate/core` library in a new Angular component. We'll cover how to make the necessary updates to existing translation files, import the required modules, and start consuming the translation service within your component.
 
-Before you can use `TranslateService`, ensure that you've imported all necessary modules and services into your module:
+### Step 1: Update Translation Files
 
-```typescript
-import { DEFAULT_LANG, I18nLanguageService, createTranslateLoader} from '@bmcorp/corp-core';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-```
+The first step is to add the necessary translation keys to your existing translation files. These files are usually located in the `assets/i18n/` directory of your project.
 
-## Setting Up the Translation Module
+1. **Locate the Translation Files**: 
+   - You should find JSON files like `en.json` for English and `ar.json` for Arabic in the `assets/i18n/` directory.
 
-To start using translations in your Angular app, you need to configure the translation module. Here’s a basic setup:
+2. **Add New Translation Keys**:
+   - Open the appropriate translation file (e.g., `en.json` for English) and add the keys you need.
+   - For example, if you want to add a greeting message:
 
-1. **Create Translation Files**: Create JSON files for each language you want to support (e.g., `en.json`, `fr.json`).
+   - **assets/i18n/en.json**:
+     ```json
+     {
+       "HELLO": "Hello, World!",
+       "GOODBYE": "Goodbye!"
+     }
+     ```
 
-   Example of `en.json`:
-   ```json
-   {
-       "HELLO": "Hello",
-       "WELCOME": "Welcome to our application"
-   }
-   ```
+   - **assets/i18n/ar.json**:
+     ```json
+     {
+       "HELLO": "مرحبا بالعالم!",
+       "GOODBYE": "مع السلامة!"
+     }
+     ```
 
-   Example of `fr.json`:
-   ```json
-   {
-       "HELLO": "Bonjour",
-       "WELCOME": "Bienvenue dans notre application"
-   }
-   ```
+   Make sure to add these keys to all the relevant language files in your project.
 
-2. **Configure the `TranslateService` in the App Module**:
+### Step 2: Import the Translate Module in Your Module
 
+Next, you need to ensure that the `TranslateModule` is imported and configured in your Angular module. This allows the `TranslateService` to be available in your components.
+
+1. **Import and Configure TranslateModule** in Your Module (e.g., `app.module.ts`):
    ```typescript
    import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-   import { HttpClient } from '@angular/common/http';
-   import { HttpClientModule } from '@angular/common/http';
    import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+   import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-   // AoT requires an exported function for factories
    export function HttpLoaderFactory(http: HttpClient) {
-     return new TranslateHttpLoader(http);
+     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
    }
 
    @NgModule({
+     declarations: [AppComponent, /* other components */],
      imports: [
        HttpClientModule,
        TranslateModule.forRoot({
@@ -59,13 +57,84 @@ To start using translations in your Angular app, you need to configure the trans
            useFactory: HttpLoaderFactory,
            deps: [HttpClient]
          }
-       })
+       }),
+       /* other modules */
      ],
-     declarations: [AppComponent],
-     bootstrap: [AppComponent]
+     bootstrap: [AppComponent],
    })
-   export class AppModule { }
+   export class AppModule {}
    ```
+
+   - **HttpClientModule** is imported to enable HTTP requests for loading the translation files.
+   - **TranslateModule** is configured to load translation files from the `assets/i18n/` directory.
+
+### Step 3: Consuming the Translate Service in Your Component
+
+Now, you’re ready to use the `TranslateService` in your new component.
+
+1. **Create or Open a Component**:
+   If you haven't already, generate a new component:
+   ```bash
+   ng generate component example
+   ```
+
+2. **Import `TranslateService` in the Component**:
+   Open the component's TypeScript file (e.g., `example.component.ts`) and inject `TranslateService` in the constructor.
+
+   ```typescript
+   import { Component } from '@angular/core';
+   import { TranslateService } from '@ngx-translate/core';
+
+   @Component({
+     selector: 'app-example',
+     templateUrl: './example.component.html',
+   })
+   export class ExampleComponent {
+
+     constructor(private translate: TranslateService) {
+       // Set default language
+       this.translate.setDefaultLang('en');
+
+       // Optionally: Set language based on user preference
+       const userLang = 'en'; // Replace with actual user preference
+       this.translate.use(userLang);
+     }
+
+     // Method to switch languages
+     switchLanguage(lang: string) {
+       this.translate.use(lang);
+     }
+   }
+   ```
+
+   - **TranslateService** is injected to handle language switching and retrieving translations.
+
+3. **Use the Translations in the Component Template**:
+   Open the component's HTML file (e.g., `example.component.html`) and use the `translate` pipe to display the translations.
+
+   ```html
+   <div>
+     <p>{{ 'HELLO' | translate }}</p>
+     <p>{{ 'GOODBYE' | translate }}</p>
+
+     <!-- Buttons to switch language -->
+     <button (click)="switchLanguage('en')">English</button>
+     <button (click)="switchLanguage('ar')">العربية</button>
+   </div>
+   ```
+
+   - The `translate` pipe fetches the translation for the given key (e.g., `HELLO`).
+   - The `switchLanguage` method is bound to buttons, allowing users to switch between languages dynamically.
+
+### Summary
+
+To implement `TranslateService` in a new Angular component, you need to make changes in three main areas:
+
+1. **Translation Files**: Add the necessary translation keys to the existing files (`en.json`, `ar.json`, etc.).
+2. **Module Setup**: Ensure `TranslateModule` is imported and configured in your Angular module.
+3. **Component Implementation**: Inject `TranslateService` in your component and use the `translate` pipe in the template to display the translations.
+
+
 
 ## Using `TranslateService` in Components
 
