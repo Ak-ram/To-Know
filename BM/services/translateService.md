@@ -1,19 +1,18 @@
-# Using the `TranslateService` in Angular
+# Guide to use `TranslateService`
+The `TranslateService` is part of a powerful Angular translation library that helps manage translations in your application. It allows you to dynamically change languages, load translations, handle missing translations, and more. Below, we will walk through the usage of the `TranslateService` in Angular, and learn how to use it in your code.
 
-Localization and internationalization are essential aspects of modern web applications. Angular provides a robust mechanism for managing translations through the `TranslateService`. In this article, we will walk through the usage of the `TranslateService` in Angular, exploring its key functionalities and how to implement it effectively.
-
-## Introduction
-
-The `TranslateService` is part of a powerful Angular translation library that helps manage translations in your application. It allows you to dynamically change languages, load translations, handle missing translations, and more. Below, we break down how to use the `TranslateService` in your Angular project.
+To be able use translateService we need to make changes in 3 places:
+1- in our module
+2- translation files
+3- in our component
 
 ## Importing Required Modules
 
-Before you can use `TranslateService`, ensure that you've imported all necessary modules and services into your Angular project:
+Before you can use `TranslateService`, ensure that you've imported all necessary modules and services into your module:
 
 ```typescript
-import { EventEmitter, InjectionToken } from "@angular/core";
-import { Observable } from "rxjs";
-import { TranslateService, TranslateLoader, TranslateCompiler, TranslateParser, TranslateStore, MissingTranslationHandler } from "./translate-service";
+import { DEFAULT_LANG, I18nLanguageService, createTranslateLoader} from '@bmcorp/corp-core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 ```
 
 ## Setting Up the Translation Module
