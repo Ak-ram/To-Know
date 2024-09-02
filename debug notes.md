@@ -218,3 +218,69 @@ You can track unused css and js by using coverage panel, you can find it in comm
 
 Video 23: css overview
 This dispaly information about the used css properties like used colors, fonts, media quires and also unused css declaration.
+
+
+Video 23: find & fix problems
+
+There are some issues that don’t appear as a messages in console tab but it show in issues tab where you can find info about the issue like how to solve it and the resource that make this issue.
+
+
+Video 23: Media tab
+
+Open command menu and write media to open a tab that analyzes media files and give you detailed info about messages, properties, and events in this media that can be exported in json file for further analysis.
+
+
+Video 23: Security Panel
+
+This panel help you to check the certificates of the website and see it, also tell you if the website is secure ‘https’ or not ‘http’, you should refresh the page to make this tab display info exactly like in network tab
+
+Video 23: Search Panel
+You can search for a string or element in all loaded files within this tab, just open command menu and look for search command
+
+
+Video 23: Rendering Panel
+Open command menu and look for rendering, this will open a tab with a list of checkboxes for specific options:
+1- Pain Flashing: this detect elements that are repeatedly re-rendered or updated
+2- Layout Shift Regions:  highlight element when change its position from point to point.
+3- Frame Rendering stats: give a real time estimiation of frames per second.
+We can also see information on GPU frame status and GPU memory usage.
+
+
+Video 24: Application tab:
+In this panel you can find several tabs like:  1- manifest: for PWA
+2- storage: display used storage by this site and also clear site data option
+3- local storage : to store data in user’s device all the time
+4- session storage: to store data in user’s device, and this data released automatically when he close the tab.
+5- cookies:  is a small piece of data that is sent from a website and stored on the user's device.
+Cookies are used to remember information about the user, such as their preferences or what is in their
+shopping cart.
+6- cache storage: list all resources that the website cashed
+7- indexedDB: 
+
+Video 24: Memory tab:
+Detached elements: In JavaScript, a detached element refers to an element that exists in the memory of your program but is no longer attached to the DOM (Document Object Model) tree. This means the element was once part of the document, but has been removed or "detached" from the visible page structure.
+
+// Creating an element
+const div = document.createElement('div');
+
+// The div is currently detached because it's not in the DOM
+console.log(div.parentNode); // null
+
+// Adding the element to the DOM
+document.body.appendChild(div);
+
+// Now it's attached
+console.log(div.parentNode); // <body>
+
+// Removing the element from the DOM
+document.body.removeChild(div);
+
+// The div is now detached again
+console.log(div.parentNode); // null
+
+
+We. Can detect detached elements from memory tab, click on Heap snapshot and it will display detached elements in the bottom section then you can click on take a snapshot button to take a snapshot to the whole objects inside the heap, but we need only detached elements so you can write ‘detached’ in filter box to display only detached elements and now where this detached element exist in your code and solve the problem
+
+
+You can also track when memory allocating occurs by using ‘allocation instrumentation on timeline” let say we have a button that store value in a variable and you need to track this memory allocation so you should navigate to memory tab and check this box “allocation instrumentation on timeline” and click on start button in the bottom it will start recording to detect any allocation occurs while recording is running so If you click on the button you created it will display a blue line in the timeline that tell use there are a memory allocation occurs also you can select this blue line in the timeline to display which variable allocated in the memory
+
