@@ -46,6 +46,9 @@
 
 ٤. **مراقبة فترة عدم النشاط**:
    ```typescript
+
+  private inactivityTime: number = AppConfigService.data.inactivityTimeMins * 2;
+
    switchMap((ev) => interval(1000 * 30).pipe(take(this.inactivityTime))),
    tap((res) => {
      if (res === this.inactivityTime - 2) {
