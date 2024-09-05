@@ -10,3 +10,4 @@ Visit this [UML Presentation](https://miro.com/app/board/uXjVKiDHrjY=/?share_lin
 | 1 |  [processLoginResponse](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/processLoginResponse.md)|
 | 2 |  [setTokenRefreshInterval](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/setTokenRefreshInterval.md)|
 | 3 |  [getTokenRefreshInterval](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/getTokenRefreshInterval.md) |
+| 4 | [getInactivityTimer](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/getInactivityTimer.md) |
