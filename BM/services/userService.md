@@ -1,96 +1,116 @@
-## ال processLoginResponse(resData:any,corporateId:string)
 
-الـ function اللي اسمها `processLoginResponse` دي بتعمل إيه باختصار، بتتعامل مع الـ response اللي بيرجع بعد الـ login. خليني أشرحلك التفاصيل:
+### شرح `processLoginResponse`
 
-١. **التأكد من إن الـ response فيه بيانات**:
-   ```typescript
-   if (resData.body && resData.body.data) {
-   ```
-   هنا بتتأكد إن فيه بيانات جاية في الـ response من الـ server، تحديدًا في `body` و `body.data`.
+```typescript
+processLoginResponse(resData: any, corporateId?: string) {
+```
 
-٢. **تهيئة الـ headers**:
-   ```typescript
-   this.widgetsConfig = [];
-   const headers: Array<Header> = [];
-   if (AppConfigService.data.headerConfig && AppConfigService.data.headerConfig.length > 0) {
-     AppConfigService.data.headerConfig.forEach((x) => {
-       if (resData.headers.has(x)) {
-         headers.push({ key: x, value: resData.headers.get(x) });
-       }
-     });
-   }
-   ```
-   هنا بيعمل reset للـ `widgetsConfig` وبعدين بيعمل array فاضية اسمها `headers`. لو فيه إعدادات headers في التطبيق (`AppConfigService.data.headerConfig`)، بيبدأ يشيك على الـ headers اللي جاية في الـ response (`resData.headers`) ويخزنها في array لو موجودة.
+- الفنكشن بتبدأ بإنها تستقبل حاجتين: `resData` اللي هو الـ response اللي بيرجع من السيرفر بعد الـ login، و`corporateId` اللي هو اختياري (optional) وبيكون رقم الشركة لو المستخدم عنده أكتر من شركة مرتبطة بيه.
 
-٣. **فك الـ token واحتساب وقت انتهاء الصلاحية**:
-   ```typescript
-   const tokenInfo: any = this.jwtDecode(resData.body.data.token);
-   const expirationTime = new Date(tokenInfo.exp * 1000).getTime().toString();
-   const expirationDate = new Date(tokenInfo.exp * 1000).toString();
-   ```
-   بيستخدم `jwtDecode` عشان يفك الـ token ويعرف المعلومات اللي جواه (زي وقت الانتهاء). بعدها بيحسب وقت انتهاء الصلاحية (expiration time) وبيحوله لرقم أو تاريخ.
+```typescript
+  if (resData.body && resData.body.data) {
+```
 
-٤. **ضبط فترة تحديث الـ token**:
-   ```typescript
-   this.setTokenRefreshInterval(new Date(tokenInfo.exp * 1000));
-   ```
-   بيحدد فترة تحديث الـ token تلقائيًا بناءً على الوقت اللي فاضل لانتهاء صلاحيته.
+- هنا بنتأكد إن الـ response فيه بيانات (`body` و`data`) عشان نبدأ نشتغل عليهم.
 
-٥. **إنشاء كائن المستخدم (User object)**:
-   ```typescript
-   const user = new User(
-     resData.body.data.customerName,
-     resData.body.data.corporateId,
-     headers,
-     resData.body.data.token,
-     expirationDate,
-     resData.body.data.authorized,
-     this.patchCustomTranscationType(resData.body.data.transactionTypes),
-     this.patchEnabledTransactionSubType(resData.body.data?.enabledTransactionSubType),
-     resData.body.data.userType === 'BANKADMIN',
-     resData.body.data.companies,
-     resData.body.data.changePassword,
-     resData.body.data.otpEnabled,
-     resData.body.data.lastLogin,
-     resData.body.data.firstName,
-     resData.body.data.lastName,
-     !!resData.body.data.inquiryUser,
-     !!resData.body.data.internetBanking
-   );
-   ```
-   هنا بيعمل object للمستخدم (user) بناءً على البيانات اللي جاية في الـ response زي الاسم، الـ token، وبيانات الشركات اللي المستخدم شغال معاها، وغيره.
+```typescript
+    this.widgetsConfig = [];
+```
 
-٦. **تحديد الـ corporateId**:
-   ```typescript
-   this.userCifList = user.companies;
-   let _corporateId: string = user.cifId;
-   if (corporateId) {
-     _corporateId = this.userCifList.findIndex((item) => item === corporateId) > -1 ? corporateId : user.cifId;
-   }
-   const cifId = this.userCifList.find((item) => item === _corporateId) || this.userCifList[0];
-   user.cifId = cifId;
-   this.userCif = user.cifId;
-   ```
-   لو فيه `corporateId` متبعت، بيشوف إذا كان الـ `corporateId` ده موجود ضمن الشركات المرتبطة بالمستخدم. لو موجود، بيستخدمه، لو مش موجود، بياخد الـ corporate ID الأساسي للمستخدم.
+- بنفرغ الـ `widgetsConfig` اللي غالبًا بيحتوي على إعدادات الـ widgets الخاصة بالمستخدم.
 
-٧. **تحديث البيانات في الـ observable والـ storage**:
-   ```typescript
-   this.user$.next(user);
-   this.storage.setItem({
-     ...this._userDataIT,
-     value: JSON.stringify(user),
-   });
-   this.storage.setItem({
-     ...this._expirationTimeIT,
-     value: expirationTime,
-   });
-   this.storage.setItem({
-     ...STORAGE_CONST.ANNOUNCEMENT,
-     value: 'Y',
-   });
-   ```
-   - بيحدث الـ observable `user$` عشان يبعت بيانات المستخدم الجديدة.
-   - بيخزن بيانات المستخدم ووقت انتهاء الصلاحية في الـ local storage.
-   - وبيحط قيمة "Y" للإعلان في الـ storage.
+```typescript
+    const headers: Array<Header> = [];
+    if (AppConfigService.data.headerConfig && AppConfigService.data.headerConfig.length > 0) {
+      AppConfigService.data.headerConfig.forEach((x) => {
+        if (resData.headers.has(x)) {
+          headers.push({ key: x, value: resData.headers.get(x) });
+        }
+      });
+    }
+```
 
-باختصار، الـ function دي بتاخد الـ response اللي بيرجع بعد الـ login، تفك الـ token، تعمل كائن للمستخدم، وتخزن البيانات في الـ local storage و الـ observable عشان تستخدمها بعدين.
+- هنا بنشوف إذا كان فيه إعدادات headers خاصة بالتطبيق (`headerConfig`)، وبعدين بنشيك على الـ headers اللي جت في الـ response، لو لقيناها بنضيفها في مصفوفة headers.
+
+### استخراج وفك الـ token
+
+```typescript
+    const tokenInfo: any = this.jwtDecode(resData.body.data.token);
+    const expirationTime = new Date(tokenInfo.exp * 1000).getTime().toString();
+    const expirationDate = new Date(tokenInfo.exp * 1000).toString();
+```
+
+- هنا بنفك (decode) الـ token اللي جاي من الـ response باستخدام `jwtDecode`. الهدف من كده إننا نعرف معلومات زي وقت انتهاء الـ token (`exp`) عشان نقدر نتعامل معاه. بنحول الـ expiration time لتاريخ ووقت نقدر نستخدمهم لاحقًا في التطبيق.
+
+### ضبط الـ token refresh interval
+
+```typescript
+    this.setTokenRefreshInterval(new Date(tokenInfo.exp * 1000));
+```
+
+- بنستخدم وقت انتهاء الـ token اللي استخرجناه عشان نضبط الفنكشن اللي بتحدث الـ token تلقائيًا قبل انتهاء صلاحيته.
+
+### تكوين الـ User object
+
+```typescript
+    const user = new User(
+      resData.body.data.customerName,
+      resData.body.data.corporateId,
+      headers,
+      resData.body.data.token,
+      expirationDate,
+      resData.body.data.authorized,
+      this.patchCustomTranscationType(resData.body.data.transactionTypes),
+      this.patchEnabledTransactionSubType(resData.body.data?.enabledTransactionSubType),
+      resData.body.data.userType === 'BANKADMIN',
+      resData.body.data.companies,
+      resData.body.data.changePassword,
+      resData.body.data.otpEnabled,
+      resData.body.data.lastLogin,
+      resData.body.data.firstName,
+      resData.body.data.lastName,
+      !!resData.body.data.inquiryUser,
+      !!resData.body.data.internetBanking
+    );
+```
+
+- هنا بنبني object جديد للمستخدم بناءً على البيانات اللي جت في الـ response. البيانات دي بتشمل اسم المستخدم، رقم الشركة، الـ token، صلاحيات المستخدم، الشركات اللي يقدر يتعامل معاها، وغيرها. 
+
+### التعامل مع الـ corporateId
+
+```typescript
+    this.userCifList = user.companies;
+    let _corporateId: string = user.cifId;
+    if (corporateId) {
+      _corporateId = this.userCifList.findIndex((item) => item === corporateId) > -1 ? corporateId : user.cifId;
+    }
+    const cifId = this.userCifList.find((item) => item === _corporateId) || this.userCifList[0];
+    user.cifId = cifId;
+    this.userCif = user.cifId;
+```
+
+- لو المستخدم مرتبط بأكتر من شركة، هنا بنحدد أي شركة مرتبطة بالمستخدم بناءً على الـ `corporateId` اللي ممكن يكون موجود أو بنستخدم الشركة الافتراضية.
+
+### تخزين بيانات المستخدم
+
+```typescript
+    this.user$.next(user);
+    this.storage.setItem({
+      ...this._userDataIT,
+      value: JSON.stringify(user),
+    });
+    this.storage.setItem({
+      ...this._expirationTimeIT,
+      value: expirationTime,
+    });
+    this.storage.setItem({
+      ...STORAGE_CONST.ANNOUNCEMENT,
+      value: 'Y',
+    });
+  }
+```
+
+- في الآخر بنعمل update للـ observable (`user$`) عشان نخلي بيانات المستخدم متاحة في التطبيق، وبعدين بنخزن بيانات المستخدم والـ expiration time في الـ storage عشان نستخدمهم لاحقًا من غير ما نضطر نطلب البيانات تاني من السيرفر.
+
+### الخلاصة:
+الفنكشن دي بتعالج الـ login response عن طريق فك الـ token، ضبط وقت تجديده، تكوين بيانات المستخدم، وتخزينها في الـ storage عشان نقدر نستخدمها جوه التطبيق.
