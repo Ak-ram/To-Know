@@ -12,4 +12,5 @@ Visit this [UML Presentation](https://miro.com/app/board/uXjVKiDHrjY=/?share_lin
 | 3 |  [getTokenRefreshInterval](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/getTokenRefreshInterval.md) |
 | 4 | [getInactivityTimer](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/getInactivityTimer.md) |
 | 5 | [sessionExists](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/sessionExists.md) |
-| 6 | [checkExistingSession](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/checkExistingSession.md)
+| 6 | [checkExistingSession](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/checkExistingSession.md) |
+| 7 | [aesCbcEncrypt](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/aesCbcEncrypt.md)
