@@ -8,5 +8,5 @@ Visit this [UML Presentation](https://miro.com/app/board/uXjVKiDHrjY=/?share_lin
 | # | Name |
 |---|---|
 | 1 |  [processLoginResponse](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/processLoginResponse.md)|
-| 2 |   [setTokenRefreshInterval](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/setTokenRefreshInterval.md)|
-| 3 |   |
+| 2 |  [setTokenRefreshInterval](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/setTokenRefreshInterval.md)|
+| 3 |  [getTokenRefreshInterval](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/getTokenRefreshInterval.md) |
