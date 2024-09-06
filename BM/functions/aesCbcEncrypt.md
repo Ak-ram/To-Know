@@ -37,8 +37,10 @@ const key = 'BF1C6D7727' + random;
 ```typescript
 const iv = '961E9031E2CAD84A';
 ```
-- **الـ IV**: ده زي قيمة ثابتة بنستخدمها علشان نزيد أمان التشفير، علشان نخلي كل عملية تشفير مختلفة حتى لو البيانات نفسها هي هي.
-
+- **الـ IV**: ده قيمه بنستخدمها علشان نزيد أمان التشفير، ال IV ده لو:
+  - متغير هيرجعلي encrupted key مختلف في كل مرة حتى لو البيانات نفسها لم تتغير.
+  - ثابت (constant or hard coded) هيرجعلي نفس ال encrupted key  في كل مرة إذا كانت البيانات هي نفسها.
+    
 #### ٣. **تحويل النصوص لصيغة Hex**:
 ```typescript
 const keyHex = CryptoJS.enc.Utf8.parse(key);
@@ -65,3 +67,22 @@ const messageHex = CryptoJS.enc.Utf8.parse(message);
 return encrypted.toString();
 ```
  في الآخر، بنعمل return للنص المشفر ده.
+
+
+
+مثال: 
+```typescript
+// A constant IV yields identical results for the same input.
+   console.log('1',this.userService.aesCbcEncrypt('akram',212)); // mum1rnfOnVEiCEKQTQQ3Vw== 
+   console.log('2',this.userService.aesCbcEncrypt('akram',212)); // mum1rnfOnVEiCEKQTQQ3Vw==
+
+// Change random value to get different results:
+   console.log('1',this.userService.aesCbcEncrypt('akram',212)); // mum1rnfOnVEiCEKQTQQ3Vw== 
+   console.log('2',this.userService.aesCbcEncrypt('akram',212)); // wTV6RUFTWou9USeKXcZ4iA==
+```
+
+> [!note]
+> For More Security, we can replace `random` with `IV`: `this.userService.aesCbcEncrypt(message,IV_Value)`
+
+
+ 
