@@ -78,7 +78,7 @@ return encrypted.toString();
 
 // Change random value to get different results:
    console.log('1',this.userService.aesCbcEncrypt('akram',212)); // mum1rnfOnVEiCEKQTQQ3Vw== 
-   console.log('2',this.userService.aesCbcEncrypt('akram',212)); // wTV6RUFTWou9USeKXcZ4iA==
+   console.log('2',this.userService.aesCbcEncrypt('akram',22)); // wTV6RUFTWou9USeKXcZ4iA==
 ```
 
 > [!note]
