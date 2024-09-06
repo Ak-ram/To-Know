@@ -70,7 +70,7 @@ return encrypted.toString();
 
 
 
-مثال: 
+### مثال: 
 ```typescript
 // A constant IV yields identical results for the same input.
    console.log('1',this.userService.aesCbcEncrypt('akram',212)); // mum1rnfOnVEiCEKQTQQ3Vw== 
