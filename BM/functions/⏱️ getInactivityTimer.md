@@ -1,5 +1,5 @@
 
-![login](https://github.com/user-attachments/assets/89bfbfb8-0a37-447e-b341-1cf9a4eb29ae)
+![login (1)](https://github.com/user-attachments/assets/e8b4e3ed-62fe-4932-a1ae-3f41008eb0f1)
 
 ## شرح دالة `getInactivityTimer`
 
