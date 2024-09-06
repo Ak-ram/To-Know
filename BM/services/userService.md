@@ -15,4 +15,5 @@ Visit this [UML Presentation](https://miro.com/app/board/uXjVKiDHrjY=/?share_lin
 | 6 | [checkExistingSession](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/checkExistingSession.md) |
 | 7 | [aesCbcEncrypt](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/aesCbcEncrypt.md)
 | 8 | [login](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/login.md)
-| 9 | [setCifId](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/setCifId.md) |
+| 9 | [logout](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/logout.md) |
+| 10 | [setCifId](https://github.com/Ak-ram/To-Know/blob/main/BM/functions/setCifId.md) |
