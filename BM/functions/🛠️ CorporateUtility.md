@@ -262,10 +262,17 @@ CorporateUtility.scrollToTop();
 ```
 
 ---
-
 ### 25. **downloadXlsReport**
 
 It downloads a transaction report as an Excel file.
 
 ```typescript
-const report
+const reportData = [
+  { transactionId: 1, amount: 100, date: '2023-01-01' },
+  { transactionId: 2, amount: 200, date: '2023-02-01' }
+];
+CorporateUtility.downloadXlsReport(reportData, 'Transaction Report', 'transactions.xlsx');
+// This will generate an Excel file named "transactions.xlsx" with the report data.
+```
+
+This utility function typically exports the provided data to an Excel file and saves it locally under the specified filename (`transactions.xlsx` in this case).
